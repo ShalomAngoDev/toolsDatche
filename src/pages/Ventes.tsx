@@ -62,55 +62,67 @@ export function Ventes() {
   }
 
   async function saveVente(index: number) {
-    const form = venteForms[index];
-    // Pour les modes de paiement autres qu'Espèces, amountPaid = total
-    const amountPaid = form.paymentMethod === PaymentMethod.Especes 
-      ? form.amountPaid 
-      : getFormTotal(form);
-    
-    const result = createVente(
-      form.product,
-      form.quantity,
-      form.paymentMethod,
-      amountPaid,
-      prices
-    );
+    try {
+      const form = venteForms[index];
+      // Pour les modes de paiement autres qu'Espèces, amountPaid = total
+      const amountPaid = form.paymentMethod === PaymentMethod.Especes 
+        ? form.amountPaid 
+        : getFormTotal(form);
+      
+      const result = createVente(
+        form.product,
+        form.quantity,
+        form.paymentMethod,
+        amountPaid,
+        prices
+      );
 
-    if ('error' in result) {
-      setErrors({ ...errors, [index]: result.error });
-      return;
-    }
-
-    await db.ventes.add(result);
-    
-    // Remove form from list
-    const updated = venteForms.filter((_, i) => i !== index);
-    setVenteForms(updated);
-    const newErrors = { ...errors };
-    delete newErrors[index];
-    setErrors(newErrors);
-
-    // Update stock
-    if (form.product === Product.Gamme) {
-      // Pour Gamme, décrémenter un élément de chaque produit
-      const productsInBox = [
-        Product.Shampoing,
-        Product.Masque,
-        Product.Crème,
-        Product.Huile,
-        Product.Serviette,
-        Product.Vaporisateur,
-        Product.Masseur
-      ];
-      // Pour chaque quantité de Gamme vendue, décrémenter chaque produit
-      for (let i = 0; i < form.quantity; i++) {
-        for (const product of productsInBox) {
-          await updateStock(product, -1);
-        }
+      if ('error' in result) {
+        setErrors({ ...errors, [index]: result.error });
+        return;
       }
-    } else {
-      // Pour les autres produits, décrémenter normalement
-      await updateStock(form.product, -form.quantity);
+
+      // Enregistrer la vente
+      await db.ventes.add(result);
+      
+      // Update stock
+      try {
+        if (form.product === Product.Gamme) {
+          // Pour Gamme, décrémenter un élément de chaque produit
+          const productsInBox = [
+            Product.Shampoing,
+            Product.Masque,
+            Product.Crème,
+            Product.Huile,
+            Product.Serviette,
+            Product.Vaporisateur,
+            Product.Masseur,
+            Product.Miroir
+          ];
+          // Pour chaque quantité de Gamme vendue, décrémenter chaque produit
+          for (let i = 0; i < form.quantity; i++) {
+            for (const product of productsInBox) {
+              await updateStock(product, -1);
+            }
+          }
+        } else {
+          // Pour les autres produits, décrémenter normalement
+          await updateStock(form.product, -form.quantity);
+        }
+      } catch (stockError) {
+        console.error('Erreur lors de la mise à jour du stock:', stockError);
+        // On continue même si le stock échoue
+      }
+      
+      // Remove form from list
+      const updated = venteForms.filter((_, i) => i !== index);
+      setVenteForms(updated);
+      const newErrors = { ...errors };
+      delete newErrors[index];
+      setErrors(newErrors);
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement de la vente:', error);
+      setErrors({ ...errors, [index]: 'Erreur lors de l\'enregistrement. Veuillez réessayer.' });
     }
   }
 
@@ -150,7 +162,8 @@ export function Ventes() {
           Product.Huile,
           Product.Serviette,
           Product.Vaporisateur,
-          Product.Masseur
+          Product.Masseur,
+          Product.Miroir
         ];
         // Pour chaque quantité de Gamme supprimée, restaurer chaque produit
         for (let i = 0; i < vente.quantity; i++) {
@@ -254,9 +267,11 @@ export function Ventes() {
                         updateVenteForm(index, 'product', newProduct);
                       }}
                     >
-                      {Object.values(Product).map(p => (
-                        <option key={p} value={p}>{p}</option>
-                      ))}
+                      {Object.values(Product)
+                        .filter(p => p !== Product.Miroir) // Miroir n'est pas vendable
+                        .map(p => (
+                          <option key={p} value={p}>{p}</option>
+                        ))}
                     </select>
                   </div>
                   <div className="form-field">
@@ -344,12 +359,13 @@ export function Ventes() {
                   )}
                   <div className="form-field">
                     <button
-                      onClick={(e) => {
+                      onClick={async (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        saveVente(index);
+                        await saveVente(index);
                       }}
-                      onTouchStart={(e) => {
+                      onTouchEnd={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
                       }}
                       className="btn btn-success"
@@ -421,14 +437,22 @@ export function Ventes() {
                       className="btn btn-small"
                       title="Dupliquer"
                     >
-                      📋
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
                     </button>
                     <button
                       onClick={() => deleteVente(vente.id)}
                       className="btn btn-small btn-danger"
                       title="Supprimer"
                     >
-                      🗑️
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
                     </button>
                   </td>
                 </tr>

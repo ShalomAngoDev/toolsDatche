@@ -6,6 +6,7 @@ export enum Product {
   Serviette = 'Serviette',
   Vaporisateur = 'Vaporisateur',
   Masseur = 'Masseur',
+  Miroir = 'Miroir',
   Gamme = 'Gamme' // Box DATCHÉ
 }
 

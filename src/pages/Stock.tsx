@@ -9,7 +9,7 @@ export function Stock() {
   const [stockInputs, setStockInputs] = useState<Record<Product, number>>({} as Record<Product, number>);
 
   useEffect(() => {
-    // Initialize stock inputs with current values (exclure Gamme)
+    // Initialize stock inputs with current values (exclure Gamme, inclure Miroir)
     const initial: Record<Product, number> = {} as Record<Product, number>;
     Object.values(Product)
       .filter(product => product !== Product.Gamme)
@@ -46,7 +46,7 @@ export function Stock() {
 
   async function resetAllStock() {
     if (confirm('Réinitialiser tous les stocks à zéro ?')) {
-      // Supprimer uniquement les stocks des produits (pas Gamme)
+      // Supprimer uniquement les stocks des produits (pas Gamme, inclure Miroir)
       const productsToReset = Object.values(Product).filter(p => p !== Product.Gamme);
       for (const product of productsToReset) {
         await db.stock.delete(product);
@@ -111,7 +111,7 @@ export function Stock() {
         <h3>Information</h3>
         <p>
           Le stock est automatiquement décrémenté lors de chaque vente enregistrée.
-          Si le produit "Gamme" (Box) est vendu, un élément de chaque produit (Shampoing, Masque, Crème, Huile, Serviette, Vaporisateur, Masseur) est prélevé du stock.
+          Si le produit "Gamme" (Box) est vendu, un élément de chaque produit (Shampoing, Masque, Crème, Huile, Serviette, Vaporisateur, Masseur, Miroir) est prélevé du stock.
         </p>
         <p className="warning-text">
           ⚠️ Les ventes ne sont pas bloquées si le stock est insuffisant, mais vous pouvez vérifier le stock ici avant de vendre.
