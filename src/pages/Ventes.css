@@ -201,6 +201,25 @@
 
 .ventes-table-container {
   margin-bottom: 2rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  .ventes-table-container {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ventes-table-container {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    padding: 0 0.5rem;
+  }
 }
 
 .ventes-table {
@@ -290,24 +309,153 @@
   flex-wrap: wrap;
 }
 
+@media (max-width: 1024px) {
+  .ventes-page {
+    padding: 0 1rem 1rem;
+  }
+
+  .ventes-header {
+    padding: 1rem;
+  }
+
+  .ventes-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .ventes-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .vente-form-row {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
+  .ventes-page {
+    padding: 0 1rem 1rem;
+  }
+
   .ventes-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+    padding: 1rem;
+  }
+
+  .ventes-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .ventes-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 
   .vente-form-row {
     grid-template-columns: 1fr;
   }
 
+  .vente-form-card {
+    padding: 1rem;
+  }
+
+  .ventes-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .ventes-table {
-    font-size: 12px;
+    min-width: 800px;
+    font-size: 11px;
   }
 
   .ventes-table th,
   .ventes-table td {
+    padding: 0.5rem 0.25rem;
+    white-space: nowrap;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-actions {
+    flex-direction: column;
+  }
+
+  .summary-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .ventes-page {
+    padding: 0 0.5rem 0.5rem;
+  }
+
+  .ventes-header {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .ventes-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .ventes-forms h3 {
+    font-size: 1rem;
+  }
+
+  .vente-form-card {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-field label {
+    font-size: 11px;
+  }
+
+  .form-field input,
+  .form-field select {
     padding: 0.5rem;
+    font-size: 14px;
+  }
+
+  .ventes-table {
+    min-width: 700px;
+    font-size: 10px;
+  }
+
+  .ventes-table th,
+  .ventes-table td {
+    padding: 0.4rem 0.2rem;
+  }
+
+  .ventes-summary {
+    padding: 1rem;
+  }
+
+  .summary-card {
+    padding: 1rem;
+  }
+
+  .summary-card h4 {
+    font-size: 13px;
+  }
+
+  .summary-card p {
+    font-size: 12px;
   }
 }
 

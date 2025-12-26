@@ -148,15 +148,91 @@
   font-weight: 500;
 }
 
+@media (max-width: 1024px) {
+  .parametres-page {
+    padding: 0 1rem 1rem;
+  }
+
+  .parametres-header {
+    padding: 1rem;
+  }
+
+  .parametres-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .prices-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
+  .parametres-page {
+    padding: 0 1rem 1rem;
+  }
+
   .parametres-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+    padding: 1rem;
+  }
+
+  .parametres-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .parametres-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .parametres-actions .btn {
+    width: 100%;
   }
 
   .prices-grid {
     grid-template-columns: 1fr;
+  }
+
+  .parametres-info {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .parametres-page {
+    padding: 0 0.5rem 0.5rem;
+  }
+
+  .parametres-header {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .parametres-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .price-card {
+    padding: 1rem;
+  }
+
+  .price-card h3 {
+    font-size: 1rem;
+  }
+
+  .price-field input {
+    font-size: 14px;
+  }
+
+  .parametres-info {
+    padding: 0.75rem;
+  }
+
+  .parametres-info p,
+  .parametres-info li {
+    font-size: 13px;
   }
 }
 

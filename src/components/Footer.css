@@ -40,3 +40,17 @@
   width: 100%;
 }
 
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem 1rem;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1rem 0.5rem;
+    font-size: 12px;
+  }
+}
+
