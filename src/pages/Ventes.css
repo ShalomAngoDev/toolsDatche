@@ -41,6 +41,10 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  z-index: 1;
 }
 
 .btn::before {
@@ -54,11 +58,20 @@
   background: rgba(255, 255, 255, 0.3);
   transform: translate(-50%, -50%);
   transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.btn:hover::before {
+.btn:hover::before,
+.btn:active::before {
   width: 300px;
   height: 300px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .btn-primary {
@@ -102,9 +115,33 @@
 }
 
 .btn-small {
-  padding: 0.25rem 0.5rem;
-  font-size: 12px;
+  padding: 0.5rem 0.75rem;
+  font-size: 14px;
   margin: 0 0.25rem;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .btn-small {
+    padding: 0.6rem 0.8rem;
+    font-size: 16px;
+    min-width: 48px;
+    min-height: 48px;
+    margin: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-small {
+    padding: 0.5rem;
+    font-size: 18px;
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
 
 .ventes-forms {
@@ -150,6 +187,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+}
+
+.form-field button {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 .form-field label {
@@ -253,6 +296,31 @@
 .ventes-table td.warning {
   color: #ff9800;
   font-weight: 500;
+}
+
+.ventes-table td:last-child,
+.ventes-table th:last-child {
+  white-space: nowrap;
+  position: sticky;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  z-index: 5;
+}
+
+.ventes-table th:last-child {
+  z-index: 6;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.ventes-table td:last-child {
+  z-index: 4;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.ventes-table td:last-child .btn-small {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ventes-summary {
@@ -386,6 +454,24 @@
     white-space: nowrap;
   }
 
+  .ventes-table td:last-child {
+    padding: 0.75rem 0.5rem;
+    position: sticky;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 10;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+    min-width: 120px;
+  }
+
+  .ventes-table td:last-child .btn-small {
+    padding: 0.6rem 0.8rem;
+    font-size: 18px;
+    min-width: 44px;
+    min-height: 44px;
+    margin: 0.2rem;
+  }
+
   .summary-grid {
     grid-template-columns: 1fr;
   }
@@ -440,6 +526,24 @@
   .ventes-table th,
   .ventes-table td {
     padding: 0.4rem 0.2rem;
+  }
+
+  .ventes-table td:last-child {
+    padding: 0.5rem;
+    position: sticky;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 10;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+    min-width: 100px;
+  }
+
+  .ventes-table td:last-child .btn-small {
+    padding: 0.5rem;
+    font-size: 16px;
+    min-width: 40px;
+    min-height: 40px;
+    margin: 0.15rem;
   }
 
   .ventes-summary {

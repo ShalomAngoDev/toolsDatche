@@ -344,21 +344,32 @@ export function Ventes() {
                   )}
                   <div className="form-field">
                     <button
-                      onClick={() => saveVente(index)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        saveVente(index);
+                      }}
+                      onTouchStart={(e) => {
+                        e.stopPropagation();
+                      }}
                       className="btn btn-success"
                       disabled={
                         unitPrice === null ||
                         form.quantity < 1
                       }
+                      type="button"
                     >
                       Enregistrer
                     </button>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
                         const updated = venteForms.filter((_, i) => i !== index);
                         setVenteForms(updated);
                       }}
                       className="btn btn-danger"
+                      type="button"
                     >
                       Annuler
                     </button>
