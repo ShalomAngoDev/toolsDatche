@@ -7,7 +7,6 @@ import { Parametres } from './pages/Parametres';
 import { useEffect } from 'react';
 import { db } from './storage/database';
 import { DEFAULT_PRICES } from './config/prices';
-import { Product } from './models/types';
 import './App.css';
 
 function App() {

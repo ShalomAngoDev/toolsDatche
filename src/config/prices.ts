@@ -1,4 +1,4 @@
-import { Product, PriceConfig, BoxPricing } from '../models/types';
+import { Product, PriceConfig } from '../models/types';
 
 // Table de prix exacte selon spécifications
 export const DEFAULT_PRICES: PriceConfig[] = [

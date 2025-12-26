@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../storage/database';
-import { Product, PriceConfig, BoxPricing } from '../models/types';
+import { Product, PriceConfig } from '../models/types';
 import { DEFAULT_PRICES } from '../config/prices';
 import { formatCurrency } from '../utils/currency';
 import './Parametres.css';

@@ -142,7 +142,7 @@ export function exportVentesToPDF(ventes: Vente[], stats: Stats): void {
 
     // En-têtes du tableau
     doc.setFontSize(9);
-    doc.setFont(undefined, 'bold');
+    doc.setFont('helvetica', 'bold');
     const headers = ['Date', 'Produit', 'Qté', 'Paiement', 'Total'];
     const colWidths = [40, 50, 15, 35, 30];
     let xPos = 14;
@@ -152,10 +152,10 @@ export function exportVentesToPDF(ventes: Vente[], stats: Stats): void {
       xPos += colWidths[i];
     });
     yPos += 6;
-    doc.setFont(undefined, 'normal');
+    doc.setFont('helvetica', 'normal');
 
     // Lignes du tableau
-    ventes.forEach((vente, index) => {
+    ventes.forEach((vente) => {
       if (yPos > 270) {
         doc.addPage();
         yPos = 20;
@@ -220,10 +220,10 @@ export function exportTransactionsByPaymentMethod(
 
   // Total
   doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
+  doc.setFont('helvetica', 'bold');
   doc.text(`Total ${paymentMethod}: ${formatCurrency(total, currency)}`, 14, yPos);
   yPos += 10;
-  doc.setFont(undefined, 'normal');
+  doc.setFont('helvetica', 'normal');
 
   // Nombre de transactions
   doc.setFontSize(10);
@@ -238,7 +238,7 @@ export function exportTransactionsByPaymentMethod(
 
     // En-têtes du tableau
     doc.setFontSize(8);
-    doc.setFont(undefined, 'bold');
+    doc.setFont('helvetica', 'bold');
     const headers = ['Date/Heure', 'Produit', 'Qté', 'Prix unit.', 'Total', 'Montant donné', 'Monnaie'];
     const colWidths = [32, 40, 10, 22, 22, 22, 22];
     let xPos = 14;
@@ -248,7 +248,7 @@ export function exportTransactionsByPaymentMethod(
       xPos += colWidths[i];
     });
     yPos += 6;
-    doc.setFont(undefined, 'normal');
+    doc.setFont('helvetica', 'normal');
 
     // Lignes du tableau
     filteredVentes.forEach((vente) => {
@@ -286,7 +286,7 @@ export function exportTransactionsByPaymentMethod(
 
     // Ligne de total en bas
     yPos += 3;
-    doc.setFont(undefined, 'bold');
+    doc.setFont('helvetica', 'bold');
     xPos = 14;
     doc.text('TOTAL', xPos, yPos);
     xPos += colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3];

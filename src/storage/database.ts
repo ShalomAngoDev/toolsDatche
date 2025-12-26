@@ -1,5 +1,5 @@
 import Dexie, { Table } from 'dexie';
-import { Vente, PriceConfig, Stock } from '../models/types';
+import { Vente, PriceConfig, Stock, Product } from '../models/types';
 
 export class DatcheDatabase extends Dexie {
   ventes!: Table<Vente, string>;

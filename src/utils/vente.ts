@@ -1,4 +1,4 @@
-import { Vente, Product, PaymentMethod, Currency, PriceConfig, BoxPricing } from '../models/types';
+import { Vente, Product, PaymentMethod, Currency, PriceConfig } from '../models/types';
 import { PRODUCTS_REQUIRING_PRICE } from '../config/prices';
 
 export function getCurrencyFromPaymentMethod(paymentMethod: PaymentMethod): Currency {

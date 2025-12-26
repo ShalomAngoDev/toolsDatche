@@ -189,14 +189,6 @@ export function Ventes() {
     return 0;
   }
 
-  function getFormAmountPaid(form: VenteForm): number {
-    // Pour Espèces, utiliser le montant saisi
-    if (form.paymentMethod === PaymentMethod.Especes) {
-      return form.amountPaid;
-    }
-    // Pour les autres modes de paiement, montant = total
-    return getFormTotal(form);
-  }
 
   async function resetJournee() {
     if (confirm('Réinitialiser toutes les ventes de la journée ? Cette action est irréversible.')) {
